@@ -1,0 +1,100 @@
+server:
+  port: 18080
+
+spring:
+  application:
+    name: yanxue-server
+
+  # 数据库配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:13306/yanxue?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&autoReconnect=true&failOverReadOnly=false
+    username: root
+    password: root
+    hikari:
+      connection-init-sql: SET NAMES utf8mb4
+      connection-test-query: SELECT 1
+
+  # Redis配置
+  redis:
+    host: localhost
+    port: 16379
+    password:
+    database: 0
+    timeout: 10000ms
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: -1ms
+        max-idle: 8
+        min-idle: 0
+
+  # JSON配置
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    serialization:
+      write-dates-as-timestamps: false
+
+# MyBatis Plus配置
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.yanxue.entity
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    default-enum-type-handler: org.apache.ibatis.type.EnumOrdinalTypeHandler
+    # 设置字符集
+    default-fetch-size: 100
+    default-statement-timeout: 30
+
+# AI服务配置
+ai:
+  # OpenAI兼容接口配置（备用）
+  openai:
+    enabled: true
+    # 使用环境变量或占位符，生产环境需要配置真实密钥
+    api-key: ${OPENAI_API_KEY:sk-xxx}
+    base-url: ${OPENAI_BASE_URL:https://api.openai.com/v1}
+    model: ${OPENAI_MODEL:gpt-3.5-turbo}
+    timeout: 30  # 减少超时时间，快速失败
+
+  # Qwen配置（阿里通义千问 - 国内推荐）
+  qwen:
+    enabled: true
+    # 使用环境变量或占位符，生产环境需要配置真实密钥
+    api-key: ${QWEN_API_KEY:sk-xxx}
+    base-url: ${QWEN_BASE_URL:https://dashscope.aliyuncs.com/compatible-mode/v1}
+    model: ${QWEN_MODEL:qwen-turbo}
+    timeout: 30  # 减少超时时间，快速失败
+
+  # 默认使用的AI服务（qwen国内访问更稳定）
+  default-provider: qwen
+
+# JWT配置
+jwt:
+  secret: yanxue-secret-key-2024-very-long-string-for-security
+  expiration: 604800000  # 7天
+
+# 高德地图API配置
+amap:
+  key: ${AMAP_KEY:your-amap-key}
+  web-service-key: ${AMAP_WEB_KEY:your-amap-web-key}
+
+# 微信小程序配置
+wechat:
+  miniprogram:
+    app-id: ${WECHAT_APPID:wxxxxxxxxxxx}
+    app-secret: ${WECHAT_SECRET:xxxxxxxxxxxxxxxx}
+
+# 日志配置
+logging:
+  level:
+    com.yanxue: debug
+    com.baomidou.mybatisplus: debug

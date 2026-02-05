@@ -1,0 +1,144 @@
+:root {
+  /* =========================================
+     Eco-Ocean Palette (Refined)
+     ========================================= */
+  /* Brand - Teal/Cyan mix for fresh eco look */
+  --brand-50: #f0fdfa;
+  --brand-100: #ccfbf1;
+  --brand-200: #99f6e4;
+  --brand-300: #5eead4;
+  --brand-400: #2dd4bf;
+  --brand-500: #14b8a6;
+  --brand-600: #0d9488;
+  --brand-700: #0f766e;
+  --brand-800: #115e59;
+  --brand-900: #134e4a;
+
+  /* Accent - Sky Blue for actions */
+  --sky-50: #f0f9ff;
+  --sky-100: #e0f2fe;
+  --sky-200: #bae6fd;
+  --sky-300: #7dd3fc;
+  --sky-400: #38bdf8;
+  --sky-500: #0ea5e9;
+  --sky-600: #0284c7;
+
+  /* Neutral - Slate for text/bg */
+  --slate-50: #f8fafc;
+  --slate-100: #f1f5f9;
+  --slate-200: #e2e8f0;
+  --slate-300: #cbd5e1;
+  --slate-400: #94a3b8;
+  --slate-500: #64748b;
+  --slate-600: #475569;
+  --slate-700: #334155;
+  --slate-800: #1e293b;
+  --slate-900: #0f172a;
+  --slate-950: #020617;
+
+  /* =========================================
+     Semantic Tokens
+     ========================================= */
+  --admin-primary: var(--sky-500);
+  --admin-primary-hover: var(--sky-400);
+  --admin-primary-active: var(--sky-600);
+  
+  --admin-secondary: var(--brand-500);
+  --admin-success: #10b981;
+  --admin-warning: #f59e0b;
+  --admin-danger: #ef4444;
+  --admin-info: #3b82f6;
+
+  /* Backgrounds */
+  --admin-bg: #f8fafc;        /* Main background */
+  --admin-bg-soft: #f1f5f9;   /* Secondary background */
+  --admin-card-bg: #ffffff;   /* Card background */
+  
+  /* Text */
+  --admin-text-main: var(--slate-800);
+  --admin-text-secondary: var(--slate-500);
+  --admin-text-muted: var(--slate-400);
+  --admin-text-inverse: #ffffff;
+
+  /* Sidebar Specific */
+  --sidebar-bg: rgba(15, 23, 42, 0.95); /* Semi-transparent dark */
+  --sidebar-text: var(--slate-400);
+  --sidebar-text-active: var(--sky-400);
+  --sidebar-item-hover: rgba(255, 255, 255, 0.08);
+  --sidebar-item-active: rgba(14, 165, 233, 0.15);
+  --sidebar-width: 260px;
+
+  /* =========================================
+     Advanced Effects
+     ========================================= */
+  
+  /* Shadows - Layered for depth */
+  --shadow-xs: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
+  --shadow-sm: 0 1px 3px 0 rgba(15, 23, 42, 0.1), 0 1px 2px -1px rgba(15, 23, 42, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.1), 0 2px 4px -2px rgba(15, 23, 42, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.1), 0 4px 6px -4px rgba(15, 23, 42, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.1);
+  --shadow-glow: 0 0 15px rgba(14, 165, 233, 0.3); /* For primary actions */
+
+  /* Glassmorphism */
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.5);
+  --glass-backdrop: blur(12px);
+  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+
+  /* Gradients */
+  --gradient-brand: linear-gradient(135deg, var(--brand-600) 0%, var(--sky-500) 100%);
+  --gradient-surface: linear-gradient(to bottom right, #ffffff, #f8fafc);
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --ease-spring: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+}
+
+/* Global Reset Tweaks */
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--admin-bg);
+  color: var(--admin-text-main);
+  font-size: 14px;
+}
+
+/* Element Plus Override Bridge */
+:root {
+  --el-color-primary: var(--admin-primary);
+  --el-color-primary-light-3: var(--sky-300);
+  --el-color-primary-light-5: var(--sky-200);
+  --el-color-primary-light-7: var(--sky-100);
+  --el-color-primary-light-9: var(--sky-50);
+  --el-color-primary-dark-2: var(--sky-700);
+  --el-color-success: var(--admin-success);
+  --el-color-warning: var(--admin-warning);
+  --el-color-danger: var(--admin-danger);
+  --el-border-radius-base: var(--radius-sm);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--slate-300);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--slate-400);
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}

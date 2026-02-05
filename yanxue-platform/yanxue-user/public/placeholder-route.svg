@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="480" viewBox="0 0 800 480">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#eaf2ff"/>
+      <stop offset="1" stop-color="#f3f6fb"/>
+    </linearGradient>
+    <linearGradient id="b" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#2877c7"/>
+      <stop offset="1" stop-color="#4a90d9"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="480" fill="url(#g)"/>
+  <circle cx="640" cy="120" r="120" fill="#4a90d9" opacity="0.10"/>
+  <circle cx="160" cy="360" r="160" fill="#2877c7" opacity="0.08"/>
+  <rect x="160" y="170" width="480" height="140" rx="22" fill="#ffffff" opacity="0.75"/>
+  <rect x="190" y="205" width="160" height="10" rx="5" fill="#0f172a" opacity="0.22"/>
+  <rect x="190" y="230" width="260" height="10" rx="5" fill="#0f172a" opacity="0.14"/>
+  <rect x="190" y="255" width="220" height="10" rx="5" fill="#0f172a" opacity="0.12"/>
+  <rect x="520" y="210" width="90" height="34" rx="17" fill="url(#b)" opacity="0.92"/>
+  <text x="400" y="420" text-anchor="middle" font-family="Manrope, system-ui, -apple-system, Segoe UI, Arial" font-size="16" fill="#64748b">No image</text>
+</svg>

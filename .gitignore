@@ -1,0 +1,28 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Frontend build
+dist/
+build/
+.next/
+.nuxt/
+.vite/
+coverage/
+
+# Env / local
+.env
+.env.*
+.idea/
+.vscode/
+.DS_Store
+
+# Java / Maven
+target/
+
+# Tooling / assistants
+.claude/
+

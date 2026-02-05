@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test</title>
+</head>
+<body>
+    <h1>Test Page</h1>
+    <script>
+        console.log('Page loaded successfully');
+        fetch('/src/main.js')
+            .then(r => r.text())
+            .then(t => console.log('main.js loaded:', t.substring(0, 100)))
+            .catch(e => console.error('Error loading main.js:', e));
+    </script>
+</body>
+</html>

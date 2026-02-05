@@ -1,0 +1,203 @@
+:root {
+  /* Brand - Eco-Ocean Palette (Blue-Green) */
+  --brand-50:  #f0fdfa;
+  --brand-100: #ccfbf1;
+  --brand-200: #99f6e4;
+  --brand-300: #5eead4;
+  --brand-400: #2dd4bf;
+  --brand-500: #14b8a6; /* Primary Teal */
+  --brand-600: #0d9488;
+  --brand-700: #0f766e;
+  
+  /* Secondary / Accents */
+  --accent-blue: #0ea5e9;
+  --accent-sky: #38bdf8;
+  --accent-lime: #84cc16;
+
+  /* Gradient Colors */
+  --gradient-ocean: linear-gradient(135deg, #0f766e 0%, #0ea5e9 100%);
+  --gradient-mint: linear-gradient(135deg, #14b8a6 0%, #10b981 100%);
+  --gradient-sky: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
+  --gradient-fresh: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%);
+  
+  /* Category Colors - Softened */
+  --cat-history: #f43f5e;
+  --cat-tech: #0ea5e9;
+  --cat-nature: #10b981;
+  --cat-art: #a855f7;
+  --cat-culture: #f59e0b;
+  --cat-sport: #f97316;
+
+  /* Neutrals (Slate -> Teal tinted grays) */
+  --ink-900: #134e4a; /* Deepest Teal */
+  --ink-700: #335c67;
+  --ink-600: #475569;
+  --ink-500: #64748b;
+  --line-200: #e0f2f1;
+  --line-300: #cbd5e1;
+
+  /* Surfaces */
+  --surface: rgba(255, 255, 255, 0.85);
+  --surface-strong: rgba(255, 255, 255, 0.95);
+  --shadow-sm: 0 2px 8px rgba(15, 118, 110, 0.06);
+  --shadow-md: 0 8px 24px rgba(15, 118, 110, 0.08);
+  --shadow-lg: 0 16px 40px rgba(15, 118, 110, 0.12);
+  
+  /* Glass Effect */
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.6);
+  --glass-shadow: 0 8px 32px rgba(15, 118, 110, 0.1);
+
+  /* Radius / Spacing */
+  --r-lg: 24px;
+  --r-md: 16px;
+  --r-sm: 12px;
+  --r-full: 9999px;
+
+  /* Legacy spacing tokens (used by some pages) */
+  --space-xs: 6px;
+  --space-sm: 10px;
+  --space-md: 16px;
+  --space-lg: 20px;
+  --space-xl: 24px;
+  --space-2xl: 32px;
+
+  --radius-lg: var(--r-lg);
+  --radius-full: var(--r-full);
+
+  --border-light: var(--line-200);
+  --border-medium: var(--line-300);
+
+  --text-tertiary: var(--ink-500);
+  --text-muted: var(--ink-500);
+
+  --shadow-card-hover: var(--shadow-md);
+  --transition-fast: 180ms ease;
+  --transition-slow: 360ms cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  --leading-normal: 1.6;
+  --font-normal: 400;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-md: 16px;
+  --text-lg: 18px;
+  --text-2xl: 24px;
+
+  /* Back-compat tokens */
+  --color-primary: var(--brand-500);
+  --color-primary-dark: var(--brand-600);
+  --color-primary-light: var(--brand-300);
+  --color-primary-rgb: 20, 184, 166;
+  --color-white: #ffffff;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+  --color-success: #10b981;
+
+  --text-primary: var(--ink-900);
+  --text-secondary: var(--ink-700);
+  
+  --bg-primary: #f8fafc;
+  
+  --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  color: var(--ink-700);
+  background: 
+    radial-gradient(1200px 800px at 0% 0%, rgba(20, 184, 166, 0.08) 0%, transparent 60%),
+    radial-gradient(1000px 800px at 100% 100%, rgba(14, 165, 233, 0.08) 0%, transparent 60%),
+    linear-gradient(180deg, #f0fdfa 0%, #f8fafc 100%);
+  min-height: 100vh;
+}
+
+/* Glass Card */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--glass-shadow);
+}
+
+/* Gradient Button - Eco Style */
+.btn-gradient {
+  background: var(--gradient-ocean);
+  border: none !important;
+  color: white !important;
+  font-weight: 600;
+  border-radius: var(--r-full) !important;
+  box-shadow: 0 8px 20px rgba(14, 165, 233, 0.25);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.btn-gradient:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(14, 165, 233, 0.35);
+}
+
+/* Category Circle */
+.cat-circle {
+  width: 64px;
+  height: 64px;
+  border-radius: 20px; /* Squircle */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 26px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  transform: rotate(-3deg);
+}
+
+.cat-circle:hover {
+  transform: scale(1.1) rotate(0deg);
+  border-radius: 50%;
+}
+
+/* Route Card */
+.route-card-v2 {
+  background: white;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(15, 118, 110, 0.05);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(15, 118, 110, 0.05);
+}
+
+.route-card-v2:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(15, 118, 110, 0.12);
+  border-color: rgba(20, 184, 166, 0.2);
+}
+
+/* Badge Gradient */
+.badge-gradient {
+  background: linear-gradient(135deg, #14b8a6 0%, #0ea5e9 100%);
+  color: white;
+  padding: 4px 12px;
+  border-radius: var(--r-full);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* Element Plus Theme Override */
+:root {
+  --el-color-primary: #14b8a6;
+  --el-color-primary-light-3: #5eead4;
+  --el-color-primary-light-5: #99f6e4;
+  --el-color-primary-light-7: #ccfbf1;
+  --el-color-primary-light-9: #f0fdfa;
+  
+  --el-border-radius-base: var(--r-md);
+  --el-border-radius-small: var(--r-sm);
+}

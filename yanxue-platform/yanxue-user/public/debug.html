@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户端诊断</title>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .log {
+            background: white;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 3px;
+            border-left: 4px solid #42b983;
+        }
+        .error {
+            border-left-color: #f56c6c;
+            color: #f56c6c;
+        }
+        .success {
+            border-left-color: #67c23a;
+            color: #67c23a;
+        }
+    </style>
+</head>
+<body>
+    <h1>用户端诊断</h1>
+    <div id="logs"></div>
+
+    <script type="module">
+        const logsDiv = document.getElementById('logs');
+
+        function log(message, type = 'log') {
+            const div = document.createElement('div');
+            div.className = `log ${type}`;
+            div.textContent = message;
+            logsDiv.appendChild(div);
+            console.log(message);
+        }
+
+        // 捕获所有错误
+        window.onerror = function(msg, url, lineNo, columnNo, error) {
+            log(`全局错误: ${msg} at ${url}:${lineNo}:${columnNo}`, 'error');
+            if (error && error.stack) {
+                log(`堆栈: ${error.stack}`, 'error');
+            }
+            return false;
+        };
+
+        window.addEventListener('unhandledrejection', event => {
+            log(`未处理的Promise拒绝: ${event.reason}`, 'error');
+        });
+
+        async function runDiagnostics() {
+            try {
+                log('开始诊断...', 'log');
+
+                // 测试1: 加载Vue
+                log('测试1: 加载Vue模块...', 'log');
+                const { createApp } = await import('/node_modules/.vite/deps/vue.js?v=5acedc32');
+                log('✓ Vue加载成功', 'success');
+
+                // 测试2: 加载Pinia
+                log('测试2: 加载Pinia...', 'log');
+                const { createPinia } = await import('/node_modules/.vite/deps/pinia.js?v=5acedc32');
+                log('✓ Pinia加载成功', 'success');
+
+                // 测试3: 加载ElementPlus
+                log('测试3: 加载ElementPlus...', 'log');
+                const ElementPlus = await import('/node_modules/.vite/deps/element-plus.js?v=5acedc32');
+                log('✓ ElementPlus加载成功', 'success');
+
+                // 测试4: 加载App.vue
+                log('测试4: 加载App.vue...', 'log');
+                const App = await import('/src/App.vue');
+                log('✓ App.vue加载成功', 'success');
+
+                // 测试5: 加载router
+                log('测试5: 加载router...', 'log');
+                const router = await import('/src/router/index.js');
+                log('✓ router加载成功', 'success');
+
+                // 测试6: 加载common.scss
+                log('测试6: 加载common.scss...', 'log');
+                await import('/src/styles/common.scss');
+                log('✓ common.scss加载成功', 'success');
+
+                // 测试7: 创建Vue应用
+                log('测试7: 创建Vue应用...', 'log');
+                const app = createApp(App.default);
+                log('✓ Vue应用创建成功', 'success');
+
+                log('', 'log');
+                log('所有测试通过! 主应用应该可以正常工作。', 'success');
+                log('如果主页面仍然白屏,请检查浏览器控制台的错误信息。', 'log');
+
+            } catch (error) {
+                log(`✗ 错误: ${error.message}`, 'error');
+                log(`错误堆栈: ${error.stack}`, 'error');
+            }
+        }
+
+        runDiagnostics();
+    </script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+/* Global base + small utilities.
+   Visual theme tokens live in theme.scss.
+*/
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  font-family: 'Manrope', 'PingFang SC', 'Noto Sans SC', system-ui, -apple-system, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#app {
+  min-height: 100vh;
+  position: relative;
+  isolation: isolate;
+}
+
+::selection {
+  background: rgba(20, 184, 166, 0.25); /* Teal selection */
+  color: var(--ink-900);
+}
+
+:focus-visible {
+  outline: 2px solid var(--brand-500);
+  outline-offset: 2px;
+}
+
+/* custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(15, 118, 110, 0.2);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(15, 118, 110, 0.4);
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.card {
+  background: var(--surface-strong);
+  border: 1px solid var(--line-200);
+  border-radius: var(--r-lg);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.page-title {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink-900);
+  margin: 0 0 16px;
+  background: linear-gradient(135deg, var(--ink-900) 0%, var(--brand-700) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* page transition */
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 250ms ease, transform 250ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+  transform: translateY(8px);
+}
