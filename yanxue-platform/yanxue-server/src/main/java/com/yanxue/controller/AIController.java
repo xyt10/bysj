@@ -8,6 +8,8 @@ import com.yanxue.service.AIService;
 import com.yanxue.vo.Result;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import javax.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -40,7 +42,7 @@ public class AIController {
      * AI生成路线
      */
     @PostMapping("/generate-route")
-    public Result<AIGenerateRouteResponse> generateRoute(@RequestBody AIGenerateRouteRequest request) {
+    public Result<AIGenerateRouteResponse> generateRoute(@Valid @RequestBody AIGenerateRouteRequest request) {
         log.info("AI路线生成请求: {}", request);
         try {
             AIGenerateRouteResponse response = aiService.generateRoute(request);

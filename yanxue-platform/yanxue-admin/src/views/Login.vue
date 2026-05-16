@@ -37,9 +37,12 @@
               <el-input 
                 v-model="form.username" 
                 placeholder="用户名" 
-                :prefix-icon="User"
                 class="custom-input"
-              />
+              >
+                <template #prefix>
+                  <el-icon><User /></el-icon>
+                </template>
+              </el-input>
             </el-form-item>
             
             <el-form-item prop="password">
@@ -47,11 +50,14 @@
                 v-model="form.password" 
                 type="password" 
                 placeholder="密码" 
-                :prefix-icon="Lock"
                 show-password
                 class="custom-input"
                 @keyup.enter="handleLogin"
-              />
+              >
+                <template #prefix>
+                  <el-icon><Lock /></el-icon>
+                </template>
+              </el-input>
             </el-form-item>
 
             <el-form-item>

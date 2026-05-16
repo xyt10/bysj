@@ -1,6 +1,7 @@
 package com.yanxue.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yanxue.entity.Route;
 import com.yanxue.entity.RouteSchedule;
@@ -50,9 +51,11 @@ public class RouteService {
     public Route getById(Long id) {
         Route route = routeMapper.selectById(id);
         if (route != null) {
-            // 增加浏览量
-            route.setViewCount(route.getViewCount() + 1);
-            routeMapper.updateById(route);
+            // 增加浏览量（原子更新，避免并发覆盖）
+            UpdateWrapper<Route> updateWrapper = new UpdateWrapper<>();
+            updateWrapper.eq("id", id).setSql("view_count = COALESCE(view_count, 0) + 1");
+            routeMapper.update(null, updateWrapper);
+            route.setViewCount((route.getViewCount() == null ? 0 : route.getViewCount()) + 1);
         }
         return route;
     }
@@ -121,10 +124,11 @@ public class RouteService {
      * 获取热门路线
      */
     public List<Route> getHotRoutes(int limit) {
+        int safeLimit = Math.max(1, Math.min(limit, 50));
         LambdaQueryWrapper<Route> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(Route::getStatus, 1)
                .orderByDesc(Route::getViewCount)
-               .last("LIMIT " + limit);
+               .last("LIMIT " + safeLimit);
         return routeMapper.selectList(wrapper);
     }
 }

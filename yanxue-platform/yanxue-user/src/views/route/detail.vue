@@ -79,7 +79,9 @@
           </div>
         </div>
         <div class="right-area">
-          <el-button :icon="isFavorite ? StarFilled : Star" @click="toggleFavorite">
+          <el-button @click="toggleFavorite">
+            <el-icon v-if="isFavorite"><StarFilled /></el-icon>
+            <el-icon v-else><Star /></el-icon>
             {{ isFavorite ? '已收藏' : '收藏' }}
           </el-button>
           <el-button type="primary" size="large" @click="goToBook">立即预订</el-button>

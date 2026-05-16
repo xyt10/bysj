@@ -81,7 +81,7 @@
         <div class="header-right">
           <el-dropdown trigger="click" class="user-dropdown-trigger">
             <div class="user-card">
-              <el-avatar :size="32" :icon="UserFilled" class="user-avatar" />
+              <el-avatar :size="32" class="user-avatar"><el-icon><UserFilled /></el-icon></el-avatar>
               <span class="username" v-if="!isMobile">管理员</span>
               <el-icon class="dropdown-arrow"><CaretBottom /></el-icon>
             </div>

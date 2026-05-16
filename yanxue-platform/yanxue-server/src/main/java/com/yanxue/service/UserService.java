@@ -130,11 +130,12 @@ public class UserService {
      * 用户名/手机号+密码登录
      */
     public String login(String account, String password) {
+        String normalizedAccount = StrUtil.trim(account);
         // 先按用户名查找
-        User user = getByUsername(account);
+        User user = getByUsername(normalizedAccount);
         if (user == null) {
             // 再按手机号查找
-            user = getByPhone(account);
+            user = getByPhone(normalizedAccount);
         }
 
         if (user == null || user.getPassword() == null) {
@@ -142,7 +143,12 @@ public class UserService {
         }
 
         // 验证密码
-        if (!passwordEncoder.matches(password, user.getPassword())) {
+        try {
+            if (!passwordEncoder.matches(password, user.getPassword())) {
+                return null;
+            }
+        } catch (IllegalArgumentException e) {
+            log.warn("用户密码格式异常, userId={}, username={}", user.getId(), user.getUsername(), e);
             return null;
         }
 
@@ -153,11 +159,14 @@ public class UserService {
      * 用户注册
      */
     public String register(RegisterRequest request) {
+        String normalizedUsername = normalizeUsername(request.getUsername());
+        String normalizedPhone = normalizePhone(request.getPhone());
+
         User user = new User();
-        user.setUsername(request.getUsername());
+        user.setUsername(normalizedUsername);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setNickname(request.getNickname() != null ? request.getNickname() : request.getUsername());
-        user.setPhone(request.getPhone());
+        user.setNickname(normalizeNickname(request.getNickname(), normalizedUsername));
+        user.setPhone(normalizedPhone);
         user.setLoginType("password");
         userMapper.insert(user);
 
@@ -168,8 +177,13 @@ public class UserService {
      * 根据用户名获取用户
      */
     public User getByUsername(String username) {
+        String normalizedUsername = normalizeUsername(username);
+        if (normalizedUsername == null) {
+            return null;
+        }
+
         LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(User::getUsername, username);
+        wrapper.eq(User::getUsername, normalizedUsername);
         return userMapper.selectOne(wrapper);
     }
 
@@ -177,8 +191,13 @@ public class UserService {
      * 根据手机号获取用户
      */
     public User getByPhone(String phone) {
+        String normalizedPhone = normalizePhone(phone);
+        if (normalizedPhone == null) {
+            return null;
+        }
+
         LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(User::getPhone, phone);
+        wrapper.eq(User::getPhone, normalizedPhone);
         return userMapper.selectOne(wrapper);
     }
 
@@ -219,5 +238,18 @@ public class UserService {
         
         wrapper.orderByDesc(User::getCreatedAt);
         return userMapper.selectPage(page, wrapper);
+    }
+
+    private String normalizeUsername(String username) {
+        return StrUtil.trimToNull(username);
+    }
+
+    private String normalizePhone(String phone) {
+        return StrUtil.trimToNull(phone);
+    }
+
+    private String normalizeNickname(String nickname, String fallback) {
+        String normalizedNickname = StrUtil.trimToNull(nickname);
+        return normalizedNickname != null ? normalizedNickname : fallback;
     }
 }

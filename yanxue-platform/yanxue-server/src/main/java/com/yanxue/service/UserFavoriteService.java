@@ -10,8 +10,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,9 +29,22 @@ public class UserFavoriteService {
         QueryWrapper<UserFavorite> wrapper = new QueryWrapper<>();
         wrapper.eq("user_id", userId).orderByDesc("created_at");
         List<UserFavorite> favorites = userFavoriteMapper.selectList(wrapper);
+        if (favorites.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        Set<Long> routeIds = favorites.stream()
+                .map(UserFavorite::getRouteId)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
+
+        Map<Long, Route> routeMap = routeIds.isEmpty()
+                ? Collections.emptyMap()
+                : routeMapper.selectBatchIds(routeIds).stream()
+                    .collect(Collectors.toMap(Route::getId, Function.identity()));
 
         return favorites.stream().map(f -> {
-            Route route = routeMapper.selectById(f.getRouteId());
+            Route route = routeMap.get(f.getRouteId());
             FavoriteVO vo = new FavoriteVO();
             vo.setId(f.getId());
             vo.setUserId(f.getUserId());

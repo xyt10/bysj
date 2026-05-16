@@ -15,7 +15,7 @@ public class YanxueApplication {
         SpringApplication.run(YanxueApplication.class, args);
         System.out.println("====================================");
         System.out.println("  研学旅行平台后端服务启动成功!");
-        System.out.println("  访问地址: http://localhost:8080");
+        System.out.println("  访问地址: http://localhost:18080");
         System.out.println("====================================");
     }
 }

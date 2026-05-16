@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import javax.validation.Valid;
 import java.util.Map;
 
 /**
@@ -74,7 +75,7 @@ public class UserController {
      * Web端登录（用户名/手机号+密码）
      */
     @PostMapping("/login")
-    public Result<Map<String, Object>> login(@RequestBody LoginRequest request) {
+    public Result<Map<String, Object>> login(@Valid @RequestBody LoginRequest request) {
         String token = userService.login(request.getAccount(), request.getPassword());
         if (token == null) {
             return Result.error("用户名或密码错误");
@@ -89,7 +90,7 @@ public class UserController {
      * Web端注册
      */
     @PostMapping("/register")
-    public Result<Map<String, Object>> register(@RequestBody RegisterRequest request) {
+    public Result<Map<String, Object>> register(@Valid @RequestBody RegisterRequest request) {
         // 检查用户名是否已存在
         if (userService.existsByUsername(request.getUsername())) {
             return Result.error("用户名已被注册");

@@ -12,6 +12,16 @@
   </head>
   <body>
     <div id="app"></div>
+    <script>
+      window.addEventListener('error', function(e) {
+        console.error('全局错误:', e.message, '文件:', e.filename, '行号:', e.lineno);
+        document.body.innerHTML += '<div style="position:fixed;top:0;left:0;right:0;background:#ffebee;color:#c62828;padding:20px;z-index:99999;font-family:sans-serif;"><strong>页面加载错误:</strong> ' + e.message + '<br>文件: ' + (e.filename || '未知') + '<br>行号: ' + (e.lineno || '未知') + '</div>';
+      });
+      window.addEventListener('unhandledrejection', function(e) {
+        console.error('未处理的Promise错误:', e.reason);
+        document.body.innerHTML += '<div style="position:fixed;top:0;left:0;right:0;background:#ffebee;color:#c62828;padding:20px;z-index:99999;font-family:sans-serif;"><strong>Promise错误:</strong> ' + (e.reason && e.reason.message ? e.reason.message : String(e.reason)) + '</div>';
+      });
+    </script>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

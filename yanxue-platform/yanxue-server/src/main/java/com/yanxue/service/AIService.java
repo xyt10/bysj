@@ -236,11 +236,15 @@ public class AIService {
             filteredSpots = spots.stream().limit(4).collect(Collectors.toList());
         }
         
+        Integer safeDays = request.getDays() == null || request.getDays() < 1 ? 1 : request.getDays();
+
         // 构建路线基本信息
         String theme = request.getTheme() != null ? request.getTheme() : "研学";
-        route.setName(request.getStartCity() + theme + "研学路线（系统生成）");
+        String startCity = request.getStartCity() != null ? request.getStartCity() : "本地";
+        String grade = request.getGrade() != null ? request.getGrade() : "各学段";
+        route.setName(startCity + theme + "研学路线（系统生成）");
         route.setDescription("基于您的需求生成的研学路线，包含" + filteredSpots.size() + "个精选点位，" +
-                           "适合" + request.getGrade() + "学生，共" + request.getDays() + "天行程。");
+                           "适合" + grade + "学生，共" + safeDays + "天行程。");
         
         // 估算预算
         BigDecimal totalBudget = BigDecimal.ZERO;
@@ -250,14 +254,14 @@ public class AIService {
             }
         }
         // 加上餐饮交通估算
-        totalBudget = totalBudget.add(new BigDecimal(request.getDays() * 100)); // 每天餐饮交通约100元
+        totalBudget = totalBudget.add(new BigDecimal(safeDays * 100)); // 每天餐饮交通约100元
         route.setTotalBudget(totalBudget);
         
         // 生成每日行程
         List<AIGenerateRouteResponse.DaySchedule> schedules = new ArrayList<>();
-        int spotsPerDay = Math.max(2, Math.min(3, filteredSpots.size() / request.getDays()));
+        int spotsPerDay = Math.max(1, Math.min(3, (int) Math.ceil((double) filteredSpots.size() / safeDays)));
         
-        for (int day = 1; day <= request.getDays(); day++) {
+        for (int day = 1; day <= safeDays; day++) {
             AIGenerateRouteResponse.DaySchedule daySchedule = new AIGenerateRouteResponse.DaySchedule();
             daySchedule.setDay(day);
             
